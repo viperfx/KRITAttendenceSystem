@@ -1,0 +1,237 @@
+<div id="addEnquiry" ng-controller="enquiryFormController">
+
+	<form name="enquiryForm" ng-submit="submit(lead,product)" novalidate
+		ng-scrollable="false">
+
+		<div class="row">
+			<div ng-if="error" class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+				<strong style="padding-left: 10px !important;">{{
+					errors.ERROR }}</strong> {{errorMsg}}
+
+			</div>
+
+			<div ng-if="success" class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onClose(success)">&times;</button>
+				<strong style="padding-left: 10px !important;">{{
+					labels.SUCCESS }}</strong> {{ successMsg}}
+
+			</div>
+			<div class="col-lg-12">
+				<div class="panel panel-blue">
+					<div class="panel-heading panelHeader-font-size">{{labels.ENQUIRY_DETAILS}}</div>
+
+
+					<div class="panel-body">
+						<div layout-gt-xs="column" layout-padding>
+
+							<div layout-gt-xs="row">
+								<div laylout-gt-xs="column" class="div-width">
+									<md-autocomplete flex required md-no-cache="noCache"
+										md-selected-item="lead.contactId"
+										md-selected-item-change="selectContact(lead.contactId)"
+										md-search-text="contactSearchText"
+										md-items="contact in contactSearch(contactSearchText)"
+										md-min-length="0" md-item-text="contact.display"
+										placeholder="Choose Contact If Exists"
+										md-floating-label="Contact" name="contactName" flex-gt-xs>
+									<md-item-template> <span
+										md-highlight-text="contactSearchText" md-highlight-flags="^i">{{contact.display}}</span>
+									</md-item-template> <md-not-found>"{{contactSearchText}}" </md-not-found>
+									<div ng-messages="enquiryForm.contactName.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.contactName.$error.required">
+										<div ng-message="required">* {{ errors.REQUIRED }}</div>
+									</div>
+									</md-autocomplete>
+								</div>
+
+
+								<div laylout-gt-xs="column" class="div-width">
+									<md-autocomplete flex required md-no-cache="noCache"
+										md-selected-item="lead.suffix"
+										md-search-text="suffixSearchText"
+										md-items="suffix in suffixSearch(suffixSearchText)"
+										md-min-length="0" md-item-text="suffix.display"
+										placeholder="Choose Suffix" md-floating-label="Suffix"
+										name="suffixName" flex-gt-xs> <md-item-template>
+									<span md-highlight-text="suffixSearchText"
+										md-highlight-flags="^i">{{suffix.display}}</span> </md-item-template> <md-not-found>"{{suffixSearchText}}"
+
+									</md-not-found>
+									<div ng-messages="enquiryForm.suffixName.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.suffixName.$dirty && enquiryForm.suffixName.$error.required">
+										<div ng-message="required">*Suffix {{ errors.REQUIRED }}</div>
+									</div>
+									</md-autocomplete>
+								</div>
+							</div>
+
+							<div layout-gt-xs="row">
+
+
+
+								<div layout-gt-xs="column" class="div-width">
+									<md-input-container flex-gt-xs> <label>{{labels.FIRST_NAME}}</label>
+									<input name="firstName" ng-model="lead.firstName"
+										md-maxlength="50" required>
+									<div ng-messages="enquiryForm.firstName.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.firstName.$dirty && enquiryForm.firstName.$error.required">
+										<div ng-message="required">{{labels.FIRST_NAME}}
+											{{errors.REQUIRED}}</div>
+
+									</div>
+									</md-input-container>
+								</div>
+
+								<div layout-gt-xs="column" class="div-width">
+									<md-input-container flex-gt-xs> <label>{{labels.LAST_NAME}}</label>
+									<input ng-model="lead.lastName"
+										md-placeholder="{{labels.LAST_NAME}}" required name="lastName">
+									<div ng-messages="enquiryForm.lastName.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.lastName.$dirty && enquiryForm.lastName.$error.required">
+										<div ng-message="required">*{{labels.LAST_NAME}} {{
+											errors.REQUIRED }}</div>
+									</div>
+
+									</md-input-container>
+								</div>
+							</div>
+							<div layout-gt-xs="row">
+
+
+								<div layout-gt-xs="column" class="div-width">
+									<md-input-container flex-gt-xs> <label>{{labels.COMPANY_NAME}}</label>
+									<input ng-model="lead.companyName"
+										md-placeholder="{{labels.COMPANY_NAME}}" required
+										name="companyName">
+									<div ng-messages="enquiryForm.companyName.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.companyName.$dirty && enquiryForm.companyName.$error.required">
+										<div ng-message="required">*{{labels.COMPANY_NAME}} {{
+											errors.REQUIRED }}</div>
+									</div>
+									</md-input-container>
+								</div>
+								<div laylout-gt-xs="column" class="div-width">
+									<md-autocomplete flex required md-no-cache="noCache"
+										md-selected-item="lead.industry"
+										md-search-text="industrySearchText"
+										md-items="industry in industrySearch(industrySearchText)"
+										md-min-length="0" md-item-text="industry.display"
+										placeholder="Choose Industry" md-floating-label="Industry"
+										name="industryName" flex-gt-xs> <md-item-template>
+									<span md-highlight-text="industrySearchText"
+										md-highlight-flags="^i">{{industry.display}}</span> </md-item-template> <md-not-found>"{{industrySearchText}}"
+
+									</md-not-found>
+									<div ng-messages="enquiryForm.industryName.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.industryName.$dirty && enquiryForm.industryName.$error.required">
+										<div ng-message="required">*Industry {{ errors.REQUIRED
+											}}</div>
+									</div>
+									</md-autocomplete>
+								</div>
+							</div>
+							<div layout-gt-xs="row">
+								<div layout-gt-xs="column" class="div-width">
+									<md-input-container flex-gt-xs> <label>{{labels.EMAIL_ID}}</label>
+									<input type="email" ng-model="lead.emailId"
+										md-placeholder="{{ labels.EMAIL_ID }}" required name="emailId">
+									<div ng-messages="enquiryForm.emailId.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.emailId.$dirty && enquiryForm.emailId.$error">
+										<div ng-message="required">*{{labels.EMAIL_ID}} {{
+											errors.REQUIRED }}</div>
+										<div ng-message="email">*{{ errors.EMAILCHECK }}</div>
+									</div>
+									</md-input-container>
+								</div>
+
+								<div layout-gt-xs="column" class="div-width">
+
+									<md-input-container flex-gt-xs> <label>{{labels.MOBILE_NUMBER}}</label>
+									<input name="mobileNumber" ng-model="lead.mobileNumber"
+										md-maxlength="13" minlength="10" required>
+									<div ng-messages="enquiryForm.mobileNumber.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.mobileNumber.$dirty && enquiryForm.mobileNumber.$error">
+										<div ng-message="required">*{{labels.MOBILE_NUMBER}}
+											{{errors.REQUIRED}}</div>
+										<div ng-message="minlength">*{{labels.MOBILE_NUMBER}}
+											{{errors.MINLENGTH13}}</div>
+										<div ng-message="md-maxlength">*{{labels.MOBILE_NUMBER}}
+											{{errors.MAXLENGTH13}}</div>
+
+									</div>
+
+									</md-input-container>
+								</div>
+							</div>
+							<div layout-gt-xs="row">
+
+								<div layout-gt-xs="column" class="div-width">
+
+									<md-input-container flex-gt-xs> <label>{{labels.CLIENT}}</label>
+									<input name="client" ng-model="lead.client" md-maxlength="50"
+										required>
+									<div ng-messages="enquiryForm.client.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.client.$dirty && enquiryForm.client.$error.required">
+										<div ng-message="required">{{labels.CLIENT}}
+											{{errors.REQUIRED}}</div>
+										<div ng-message="md-maxlength">*{{labels.CLIENT}} {{
+											errors.MAXLENGTH50 }}</div>
+									</div>
+
+									</md-input-container>
+								</div>
+								<div laylout-gt-xs="column" class="div-width">
+									<md-autocomplete flex required md-no-cache="noCache"
+										md-selected-item="product" md-search-text="productSearchText"
+										md-items="productD in productSearch(productSearchText)"
+										md-min-length="0" md-item-text="productD.display"
+										placeholder="Choose Product" md-floating-label="Products"
+										name="productName" flex-gt-xs> <md-item-template>
+									<span md-highlight-text="productSearchText"
+										md-highlight-flags="^i">{{productD.display}}</span> </md-item-template> <md-not-found>"{{productSearchText}}"
+
+									</md-not-found>
+									<div ng-messages="enquiryForm.productName.$error"
+										style="font: 10px !important;"
+										ng-show="enquiryForm.productName.$dirty && enquiryForm.productName.$error.required">
+										<div ng-message="required">*Product {{ errors.REQUIRED
+											}}</div>
+									</div>
+									</md-autocomplete>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div layout-gt-xs="row">
+					<div></div>
+					<span flex></span>
+					<div>
+						<button type="submit" class="btn btn-primary btn-save">{{labels.SAVE}}</button>
+					</div>
+					<div>
+						<button type="button" ng-click="reset()"
+							class="btn btn-primary btn-reset">{{labels.RESET}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+</div>
+
+

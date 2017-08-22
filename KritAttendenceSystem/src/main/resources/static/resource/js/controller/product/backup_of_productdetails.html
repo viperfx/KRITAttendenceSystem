@@ -1,0 +1,259 @@
+<div ng-controller="productDetailsController">
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h1>Product Management</h1>
+		</div>
+		<!-- 				/.panel-heading      DataTables Advanced Tables -->
+		<div class="panel-body">
+			<div>
+				<div ng-if="error" class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+					<strong style="padding-left: 10px !important;">Error!</strong>&nbsp;&nbsp;&nbsp;{{errorMsg}}
+					<a href="#" class="alert-link">Alert Link</a>.
+				</div>
+				<div ng-if="success" class="alert alert-success alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true" ng-click="onClose(success)">&times;</button>
+					<strong style="padding-left: 10px !important;">Success.. </strong>&nbsp;&nbsp;&nbsp;{{successMsg}}
+					<a href="#" class="alert-link">Alert Link</a>.
+				</div>
+			</div>
+			<div class="dataTable_wrapper">
+				<table class="table table-striped" id="Product-DataTables">
+					<thead>
+						<tr>
+							<!-- <th><md-checkbox aria-label="Select All"
+								ng-checked="isChecked()" md-indeterminate="isIndeterminate()"
+								ng-click="toggleAll()"> </md-checkbox></th> -->
+							<th>{{ columns.PRODUCT_CODE }}</th>
+							<th>{{ columns.PRODUCT_NAME }}</th>
+							<th>{{ columns.MANUFACTURER }}</th>
+							<th>{{ columns.PRODUCT_CATEGORY }}</th>
+							<th></th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="product in products"
+							ng-if="product.IS_DELETED != true">
+							<!-- <td><md-checkbox aria-label="Select"
+								ng-checked="exists(product, selected)"
+								ng-click="toggle(product, selected)"> </md-checkbox></td> -->
+							<td>{{ product.PRODUCT_CODE }}</td>
+							<td>{{ product.PRODUCT_NAME }}</td>
+							<td>{{ product.MANUFACTURER }}</td>
+							<td>{{ product.PRODUCT_CATEGORY.PRODUCT_CATEGORY_NAME }}</td>
+							<td>
+								<div>
+									<button type="button" class="btn btn-info"
+										ng-click="editDetails($event,$index,product,products,product.PRODUCT_CATEGORY,false,true)">
+										<i class="fa fa-edit" aria-hidden="true"></i>
+									</button>
+									<button type="button" class="btn btn-danger"
+										ng-click="onRemove($event,product,products)">
+										<i class="fa fa-trash" aria-hidden="true"></i>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.table-responsive -->
+		</div>
+	</div>
+	<!-- /.panel-body -->
+
+</div>
+
+
+
+<!-- 
+<div ng-controller="productDetailsController">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Product Details</h1> 
+		</div>
+		/.col-lg-12
+
+
+	</div>
+	/.row
+	<div class="row">
+		<div class="col-lg-12">
+			<div ng-if="error" class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+				<strong style="padding-left: 10px !important;">Error!</strong>&nbsp;&nbsp;&nbsp;{{errorMsg}}
+				<a href="#" class="alert-link">Alert Link</a>.
+			</div>
+			<div ng-if="success" class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onClose(success)">&times;</button>
+				<strong style="padding-left: 10px !important;">Success.. </strong>&nbsp;&nbsp;&nbsp;{{successMsg}}
+				<a href="#" class="alert-link">Alert Link</a>.
+			</div>
+			<br></br>
+			<button type="button" class="btn btn-primary btn-lg" ng-click="onregister(null,products)" title="Add New Product">
+						<i class="fa fa-plus-circle fa-lg"></i>
+			</button>
+			<button type="button" class="btn btn-info btn-lg"	ng-click="addCategory(null)" tltle="Add New Product Category">
+						<i class="fa fa-list-alt fa-lg"></i>
+			</button>
+			<button type="button" ng-disabled="selectedOne()" class="btn btn-danger btn-lg" ng-click="onRemove(e,products,selected)" title="Delete Products">
+						<i class="fa fa-trash fa-lg"></i>
+			</button>
+			<br></br>
+		
+			<button type="button" class="btn btn-primary btn-lg"
+				ng-click="onregister(null,products)" title="Add New Product">
+				New Product</button>
+			<button type="button" class="btn btn-success btn-lg"
+				ng-click="addCategory(null)" tltle="Add New Product Category">
+				New Category</button>
+			<button type="button" class="btn btn-purple btn-lg"
+				ng-click="addCategory(null)" tltle="Modify Product">Modify
+				Product</button>
+
+			<button type="button" class="btn btn-warning btn-lg"
+				ng-click="showProductCategory(null)" tltle="Modify Product Category">
+				Modify Category</button>
+			
+			<button type="button" ng-disabled="selectedOne()" class="btn btn-danger btn-lg" ng-click="onRemove(e,products,selected)" title="Delete Products">
+			Delete						
+			</button>
+			
+			<br></br>
+
+			<div ui-view="add_Product"></div>
+			<div ui-view="add_Product_Category"></div>
+			<div ui-view="add_Product"></div>
+			<div ui-view="product_Category"></div>
+
+			<div class="panel panel-purple">
+
+
+
+				<div class="panel-heading">
+						<h1>Product Management</h1>
+				</div>
+				/.panel-heading      DataTables Advanced Tables
+				<div class="panel-body">
+					<div class="dataTable_wrapper">
+						<table class="table table-striped" id="Product-DataTables">
+							<thead>
+								<tr>
+									<th><md-checkbox aria-label="Select All"
+											ng-checked="isChecked()" md-indeterminate="isIndeterminate()"
+											ng-click="toggleAll()"> </md-checkbox></th>
+									<th>Product Code {{ showCase.columns.PRODUCT_CODE }}</th>
+									<th>Product Name{{ showCase.columns.PRODUCT_NAME }}</th>
+									<th>Manufacturer{{ showCase.columns.MANUFACTURER }}</th>
+									<th>Product Category{{ showCase.columns.PRODUCT_CATEGORY }}</th>
+									<th>Edit{{ showCase.columns.EDIT }}</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="product in products"
+									ng-if="product.IS_DELETED != true">
+									<td><md-checkbox aria-label="Select"
+											ng-checked="exists(product, selected)"
+											ng-click="toggle(product, selected)"> </md-checkbox></td>
+									<td>{{ product.PRODUCT_CODE }}</td>
+									<td>{{ product.PRODUCT_NAME }}</td>
+									<td>{{ product.MANUFACTURER }}</td>
+									<td>{{ product.PRODUCT_CATEGORY.PRODUCT_CATEGORY_NAME }}</td>
+									<td>
+										<div>
+											<button type="button" class="btn btn-info"
+												ng-click="editDetails($event,$index,product,products,product.PRODUCT_CATEGORY)">
+												<i class="fa fa-edit" aria-hidden="true"></i>
+											</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					/.table-responsive
+
+				</div>
+				/.panel-body
+			</div>
+			/.panel
+		</div>
+		/.col-lg-12
+	</div>
+</div>
+ -->
+<!-- <div 
+	layout="column" layout-padding>
+	<div class="panel panel-primary">
+		<div class=" md-toolbar-tools">
+			<h3>Product Details</h3>
+		</div>
+		<md-divider/>
+
+		<span flex ng-if="error"> <md-whiteframe
+				class="md-whiteframe-10dp error-theme" flex-sm="45" flex-gt-sm="35"
+				flex-gt-md="25" layout layout-align="center center">
+
+			<strong style="padding-left: 10px !important;">Error!</strong>&nbsp;{{status}}&nbsp;&nbsp;{{errorMsg}}
+			<span flex></span> <md-button class="close"
+				ng-click="onAlertClose(error)" aria-label="close">×</md-button> </md-whiteframe>
+		</span>
+
+		<table id="productTable" datatable="ng"
+			dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns"
+			dt-instance="showCase.dtInstance"
+			class="table table-bordered dt-left">
+			<thead class="table-head ">
+				<tr>
+					<th class="table-center-row"><md-checkbox
+							aria-label="Select All" ng-checked="showCase.isChecked()"
+							md-indeterminate="showCase.isIndeterminate()"
+							ng-click="showCase.toggleAll()"> </md-checkbox></th>
+					<th class="table-center-row">{{ showCase.columns.PRODUCT_CODE
+						}}</th>
+					<th class="table-center-row">{{ showCase.columns.PRODUCT_NAME
+						}}</th>
+					<th class="table-center-row">{{ showCase.columns.MANUFACTURER
+						}}</th>
+					<th class="table-center-row">{{
+						showCase.columns.PRODUCT_CATEGORY }}</th>
+					<th class="table-center-row">{{ showCase.columns.EDIT }}</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="product in showCase.products track by $index"
+					ng-if="product.IS_DELETED != true">
+					<td class="table-center-row"><md-checkbox aria-label="Select"
+							ng-checked="showCase.exists(product, showCase.selected)"
+							ng-click="showCase.toggle(product, showCase.selected)">
+						</md-checkbox></td>
+					<td class="table-center-row">{{ product.PRODUCT_CODE }}</td>
+					<td class="table-center-row">{{ product.PRODUCT_NAME }}</td>
+					<td class="table-center-row">{{ product.MANUFACTURER }}</td>
+					<td class="table-center-row">{{
+						product.PRODUCT_CATEGORY.PRODUCT_CATEGORY_NAME }}</td>
+					<td>
+						<div>
+							<md-button type="button" title="Edit"
+								ng-click="showCase.editDetails($event,$index,product,showCase.products,product.PRODUCT_CATEGORY)"
+								class="btn btn-default" aria-label="Edit"> <i
+								class="fa fa-edit"></i> </md-button>
+
+						</div>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+
+
+	</div>
+</div>
+ --></html>

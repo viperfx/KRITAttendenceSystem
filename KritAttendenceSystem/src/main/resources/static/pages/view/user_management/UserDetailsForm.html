@@ -1,0 +1,449 @@
+<div id="addUserDetails" ng-controller="userDetailsFormController">
+
+	<form name="userDetailsForm" ng-submit="submit(user,users)" novalidate
+		ng-scrollable="false">
+		<div class="panel-blue">
+
+			<div class="page-header-product" layout-gt-xs="row">
+				<div ng-hide="isUpdate">
+					<h1>{{ labels.ADD_USER }}</h1>
+				</div>
+				<div ng-show="isUpdate">
+					<h1>{{ labels.UPDATE_USER }}</h1>
+				</div>
+				<span flex></span>
+				<div>
+					<button ng-click="back()" class="btn btn-blue"
+						style="margin-top: 30%">{{labels.BACK}}</button>
+				</div>
+
+
+			</div>
+			<div class="row">
+				<div ng-if="error" class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+					<strong style="padding-left: 10px !important;">{{
+						errors.ERROR }}</strong>{{ }}{{errorMsg}}
+
+				</div>
+
+				<div ng-if="success" class="alert alert-success alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true" ng-click="onClose(success)">&times;</button>
+					<strong style="padding-left: 10px !important;">{{
+						labels.SUCCESS }}</strong>{{ }}{{ SuccessMsg}}
+
+				</div>
+				<div class="col-lg-12">
+					<div id="accordion">
+						<div class="panel panel-blue">
+							<a data-toggle="collapse" data-parent="#accordion" href=""
+								data-target="#collapseOne">
+								<div class="panel-heading panelHeader-font-size">{{labels.USER_DETAILS}}</div>
+							</a>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div layout-gt-xs="column" layout-padding>
+										<div layout-gt-xs="row">
+											<div laylout-gt-xs="column" class="div-width">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="user.suffix"
+													md-search-text="suffixSearchText"
+													md-items="suffix in suffixSearch(suffixSearchText)"
+													md-min-length="0" md-item-text="suffix.display"
+													placeholder="Choose Suffix" md-floating-label="Suffix"
+													name="suffixName" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="suffixSearchText"
+													md-highlight-flags="^i">{{suffix.display}}</span> </md-item-template> <md-not-found>"{{suffixSearchText}}"
+
+												</md-not-found>
+												<div ng-messages="userDetailsForm.suffixName.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.suffixName.$dirty && userDetailsForm.suffixName.$error.required">
+													<div ng-message="required">*Suffix {{ errors.REQUIRED
+														}}</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.FIRST_NAME}}</label>
+												<input name="firstName" ng-model="user.firstName"
+													md-maxlength="50" required>
+												<div ng-messages="userDetailsForm.firstName.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.firstName.$dirty && userDetailsForm.firstName.$error.required">
+													<div ng-message="required">{{labels.FIRST_NAME}}
+														{{errors.REQUIRED}}</div>
+
+												</div>
+												</md-input-container>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.MIDDLE_NAME}}</label>
+												<input ng-model="user.middleName"
+													md-placeholder="{{labels.MIDDLE_NAME}}" required
+													name="middleName">
+												<div ng-messages="userDetailsForm.middleName.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.middleName.$dirty && userDetailsForm.middleName.$error.required">
+													<div ng-message="required">*{{labels.MIDDLE_NAME}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.LAST_NAME}}</label>
+												<input ng-model="user.lastName"
+													md-placeholder="{{labels.LAST_NAME}}" required
+													name="lastName">
+												<div ng-messages="userDetailsForm.lastName.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.lastName.$dirty && userDetailsForm.lastName.$error.required">
+													<div ng-message="required">*{{labels.LAST_NAME}} {{
+														errors.REQUIRED }}</div>
+												</div>
+
+												</md-input-container>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.NICK_NAME}}</label>
+												<input type="text" ng-model="user.nickName"
+													md-placeholder="{{ labels.NICK_NAME }}" required
+													name="nickName">
+												<div ng-messages="userDetailsForm.nickName.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.nickName.$dirty && userDetailsForm.nickName.$error">
+													<div ng-message="required">*{{labels.NICK_NAME}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-radio-group ng-model="user.gender">
+												<div layout-gt-xs="row">
+													<md-radio-button value="Male" class="md-primary" flex-gt-xs>{{labels.MALE}}</md-radio-button>
+
+													<span flex></span>
+													<md-radio-button value="Female" class="md-primary" flex-gt-xs>{{labels.FEMALE}}
+													</md-radio-button>
+												</div>
+												</md-radio-group>
+											</div>
+
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.EMAIL_ID}}</label>
+												<input type="email" ng-model="user.emailId"
+													md-placeholder="{{ labels.EMAIL_ID }}" required
+													name="emailId">
+												<div ng-messages="userDetailsForm.emailId.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.emailId.$dirty && userDetailsForm.emailId.$error">
+													<div ng-message="required">*{{labels.EMAIL_ID}} {{
+														errors.REQUIRED }}</div>
+													<div ng-message="email">*{{ errors.EMAILCHECK }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-input-container flex-gt-xs> <label>{{labels.MOBILE_NUMBER}}</label>
+												<input name="mobileNumber" ng-model="user.mobileNumber"
+													md-maxlength="13" minlength="10" required>
+												<div ng-messages="userDetailsForm.mobileNumber.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.mobileNumber.$dirty && userDetailsForm.mobileNumber.$error">
+													<div ng-message="required">*{{labels.MOBILE_NUMBER}}
+														{{errors.REQUIRED}}</div>
+													<div ng-message="minlength">*{{labels.MOBILE_NUMBER}}
+														{{errors.MINLENGTH13}}</div>
+													<div ng-message="md-maxlength">*{{labels.MOBILE_NUMBER}}
+														{{errors.MAXLENGTH13}}</div>
+
+												</div>
+
+												</md-input-container>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-datepicker name="dateOfBirth"
+													ng-model="user.dateOfBirth" md-placeholder="Date Of Birth"
+													md-min-date="minDate" md-max-date="maxDate">
+												</md-datepicker>
+												<div ng-messages="userDetailsForm.dateOfBirth.$error"
+													style="font: 10px !important;">
+													<div ng-message="mindate">*Date Cannot be taken
+														before 01/01/1970</div>
+													<div ng-message="maxdate">*Date cannot be taken after
+														Today's Date</div>
+												</div>
+
+											</div>
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.GROUP}}</label>
+												<input ng-model="user.group" name="group"
+													md-placeholder="{{ labels.GROUP }}" required>
+												<div ng-messages="userDetailsForm.group.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.group.$dirty && userDetailsForm.group.$error">
+													<div ng-message="required">*{{labels.GROUP}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+
+										</div>
+
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.ROLE}}</label>
+												<input type="text" ng-model="user.role"
+													md-placeholder="{{ labels.ROLE }}" required name="role">
+												<div ng-messages="userDetailsForm.role.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.role.$dirty && userDetailsForm.role.$error">
+													<div ng-message="required">*{{labels.ROLE}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-input-container flex-gt-xs> <label>{{labels.DEPARTMENT}}</label>
+												<input name="department" ng-model="user.department" required>
+												<div ng-messages="userDetailsForm.department.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.department.$dirty && userDetailsForm.department.$error">
+													<div ng-message="required">*{{labels.DEPARTMENT}}
+														{{errors.REQUIRED}}</div>
+												</div>
+
+												</md-input-container>
+											</div>
+
+											<!-- <div laylout-gt-xs="column" class="div-width">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="user.industry"
+													md-search-text="industrySearchText"
+													md-items="industry in industrySearch(industrySearchText)"
+													md-min-length="0" md-item-text="industry.display"
+													placeholder="Choose Industry" md-floating-label="Industry"
+													name="industryName" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="industrySearchText"
+													md-highlight-flags="^i">{{industry.display}}</span> </md-item-template> <md-not-found>"{{industrySearchText}}"
+
+												</md-not-found>
+												<div ng-messages="userDetailsForm.industryName.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.industryName.$dirty && userDetailsForm.industryName.$error.required">
+													<div ng-message="required">*Industry {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-autocomplete>
+											</div> -->
+										</div>
+
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.USERNAME}}</label>
+												<input type="text" ng-model="user.userName"
+													md-placeholder="{{ labels.USERNAME }}" required
+													name="userName">
+												<div ng-messages="userDetailsForm.userName.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.userName.$dirty && userDetailsForm.userName.$error">
+													<div ng-message="required">*{{labels.USERNAME}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.PASSWORD}}</label>
+												<input type="text" ng-model="user.password"
+													md-placeholder="{{ labels.PASSWORD }}" required
+													name="password">
+												<div ng-messages="userDetailsForm.password.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.password.$dirty && userDetailsForm.password.$error">
+													<div ng-message="required">*{{labels.PASSWORD}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-blue">
+							<a data-toggle="collapse" data-parent="#accordion" href=""
+								data-target="#collapseTwo">
+								<div class="panel-heading panelHeader-font-size">{{labels.ADDITIONALDETAILS}}</div>
+							</a>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div layout-gt-xs="column" layout-padding></div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-blue">
+							<a data-toggle="collapse" data-parent="#accordion" href=""
+								data-target="#collapseThree">
+								<div class="panel-heading panelHeader-font-size">{{labels.ADDRESS_DETAILS}}</div>
+							</a>
+
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div layout-gt-xs="column" layout-padding>
+
+										<!-- <div layout-gt-xs="row">
+											<div laylout-gt-xs="column" class="div-width-33">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="otherCountryName"
+													md-selected-item-change="listOfStates(otherCountryName)"
+													md-search-text-change="searchTextChange(searchOtherCountry)"
+													md-search-text="searchOtherCountry"
+													md-items="other_Country in countrySearch(searchOtherCountry)"
+													md-min-length="0" md-item-text="other_Country.display"
+													placeholder="Choose Country"
+													md-floating-label="Other Address" name="otherCountry"
+													flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchOtherCountry"
+													md-highlight-flags="^i">{{other_Country.display}}</span> </md-item-template> <md-not-found>"{{searchText}}"
+												<a ng-click="openCategoryForm(null,formCountries)">{{labels.ADD_COUNTRY}}</a>
+												</md-not-found>
+												<div ng-messages="userDetailsForm.otherCountry.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.otherCountry.$dirty">
+													<div ng-message="error">*OtherCountry {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-autocomplete>
+											</div>
+											<div laylout-gt-xs="column" class="div-width-33">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="otherStateName"
+													md-selected-item-change="listOfCities(otherStateName)"
+													md-search-text-change="searchTextChange(searchOtherState)"
+													md-search-text="searchOtherState"
+													md-items="other_State in stateSearch(searchOtherState)"
+													md-min-length="0" md-item-text="other_State.display"
+													placeholder="Choose State" md-floating-label="Other State"
+													name="otherState" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchOtherState"
+													md-highlight-flags="^i">{{other_State.display}}</span> </md-item-template> <md-not-found>"{{searchOtherState}}"
+												<a ng-click="openCategoryForm(null,formStates)">{{labels.ADD_STATE}}</a>
+												</md-not-found>
+												<div ng-messages="userDetailsForm.otherState.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.otherState.$dirty"></div>
+												<div style="font: 10px !important;"
+													ng-show="(otherStateName.countryId != null && otherStateName.countryId != undefined)  && otherStateName.countryId != otherCountryName.countryId">
+													<div style="color: red;">Select Proper State and City</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+											<div laylout-gt-xs="column" class="div-width-33">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="otherCityName"
+													md-search-text-change="searchTextChange(searchOtherCity)"
+													md-search-text="searchOtherCity"
+													md-items="other_City in citySearch(searchOtherCity)"
+													md-min-length="0" md-item-text="other_City.display"
+													placeholder="Choose City" md-floating-label="Other City"
+													md-input-name="otherCity" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchOtherCity"
+													md-highlight-flags="^i">{{other_City.display}}</span> </md-item-template> <md-not-found>"{{searchOtherCity}}"
+												<a ng-click="openCategoryForm(null,formCities)">{{labels.ADD_CITY}}</a>
+												</md-not-found>
+												<div ng-messages="userDetailsForm.otherCity.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.otherCity.$dirty"></div>
+												<div style="font: 10px !important;"
+													ng-show="(otherCityName.countryId != null && otherCityName.countryId != undefined)  && otherCityName.countryId != otherCountryName.countryId">
+													<div style="color: red;">Select Proper State and City</div>
+												</div>
+												<div style="font: 10px !important;"
+													ng-show="(otherCityName.stateId != null && otherCityName.stateId != undefined) && otherCityName.stateId != otherStateName.stateId">
+													<div style="color: red;">Select Proper City</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.STREET}}</label>
+												<input ng-model="user.otherAddressShell.addressStreet"
+													md-placeholder="{{labels.STREET}}" required
+													name="otherAddressStreet">
+												<div ng-messages="userDetailsForm.otherAddressStreet.$error"
+													style="font: 10px !important"
+													ng-show="userDetailsForm.otherAddressStreet.$dirty">
+													<div ng-message="required">*{{labels.STREET}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-input-container flex-gt-xs> <label>{{labels.ZIP}}</label>
+												<input name="otherAddressZip"
+													ng-model="user.otherAddressShell.addressZip" required>
+												<div ng-messages="userDetailsForm.otherAddressZip.$error"
+													style="font: 10px !important;"
+													ng-show="userDetailsForm.otherAddressZip.$dirty"></div>
+
+												</md-input-container>
+											</div>
+
+										</div>
+ -->
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- /.panel -->
+					</div>
+					<!-- /.col-lg-12 -->
+					<!-- <div class="panel-footer"> -->
+
+					<div layout-gt-xs="row">
+						<div></div>
+						<span flex></span>
+						<div>
+							<button type="submit" class="btn btn-blue btn-save">{{labels.SAVE}}</button>
+						</div>
+						<div>
+							<button type="button" ng-click="reset()"
+								class="btn btn-blue btn-reset">{{labels.RESET}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+

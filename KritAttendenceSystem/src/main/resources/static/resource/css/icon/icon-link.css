@@ -1,0 +1,87 @@
+button.button-add {
+    background-image: url(/resource/css/icon/icons/glyphicons-7-user-add.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 20px;           /* make this the size of your image */
+    width : 20px;
+    padding-left: 38px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+button.button-remove {
+    background-image: url(/resource/css/icon/icons/glyphicons-8-user-remove.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 15px 15px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 20px;           /* make this the size of your image */
+    width : 20px;
+    padding-left: 38px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+button.button-open {
+    background-image: url(/resource/css/icon/icons/glyphicons-153-check.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 15px 15px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 20px;           /* make this the size of your image */
+    width : 20px;
+    padding-left: 38px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+button.button-edit {
+    background-image: url(/resource/css/icon/icons/glyphicons-151-edit.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 15px 15px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 20px;
+    width : 20px;           /* make this the size of your image */
+    padding-left: 38px;     /* make text start to the right of the image */
+}   
+
+button.button-menu {
+    background-image: url(/resource/css/icon/icons/glyphicons-517-menu-hamburger.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 10px 10px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 20px;
+    width : 20px;           /* make this the size of your image */
+    padding-left: 38px;     /* make text start to the right of the image */
+}
+
+i.glyphicon-chevron-up {
+    background-image: url(/resource/css/icon/icons/glyphicons-601-chevron-up.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 10px 10px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 20px;
+    width : 20px;           /* make this the size of your image */
+    padding-left: 38px;     /* make text start to the right of the image */
+}
+
+i.glyphicon-chevron-down {
+    background-image: url(/resource/css/icon/icons/glyphicons-602-chevron-down.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px ;  /* equivalent to 'top left' */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 10px;
+    width : 10px;           /* make this the size of your image */
+    padding-right: 0px;     /* make text start to the right of the image */
+}
+
+

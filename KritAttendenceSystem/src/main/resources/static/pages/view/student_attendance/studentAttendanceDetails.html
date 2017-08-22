@@ -1,0 +1,85 @@
+<div id="grades" ng-controller="studentAttendanceDetails">
+
+
+	<div class="page-header-product" layout-gt-xs="row">
+		<div ng-hide="isUpdate">
+			<h1>{{ labels.ATTENDANCE }}</h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div ng-if="error" class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+			<strong style="padding-left: 10px !important;">{{
+				errors.ERROR }}</strong>{{ }}{{errorMsg}}
+
+		</div>
+
+		<div ng-if="success" class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true" ng-click="onClose(success)">&times;</button>
+			<strong style="padding-left: 10px !important;">{{
+				labels.SUCCESS }}</strong>{{ }}{{successMsg}}
+
+		</div>
+		<div class="col-lg-12">
+			<div id="accordion">
+				<div class="panel panel-blue"
+					ng-repeat="programCourse in programCourses">
+					<a data-toggle="collapse" data-parent="#accordion" href="" ng-click="getCourseAttendance(programCourse)"
+						data-target="#{{ programCourse.PROGRAMS_COURSE_ID}}">
+						<div class="panel-heading panelHeader-font-size">{{programCourse.COURSE.COURSE_NAME}}</div>
+					</a>
+					<div id="{{ programCourse.PROGRAMS_COURSE_ID}}"
+						class="panel-collapse collapse">
+						<div class="panel-body" >
+						<div class="dataTable_wrapper">
+					<table class="table table-striped table-bordered table-hover"
+						id="productTable">
+						<thead>
+							<tr>
+								<th>{{labels.COURSE_NAME}}</th>
+								<th>{{labels.DATE}}</th>
+								<th>{{labels.TIME_FROM}}</th>
+								<th>{{labels.TIME_TO}}</th>
+								<th>{{labels.CLASSROOM}}</th>
+								<th>{{labels.INSTRUCTOR_NAME}}</th>
+								<th>{{labels.STATUS}}
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="courseAttendance in studentCourseAttendance"
+								ng-class-even="even" ng-class-odd="odd">
+								<td>{{ courseAttendance.COURSE_SCHEDULE.COURSE.COURSE_NAME }}</td>
+								<td>{{ courseAttendance.COURSE_SCHEDULE.COURSESCHEDULE_DATE }}</td>
+								<td>{{ courseAttendance.COURSE_SCHEDULE.COURSESCHEDULE_TIME_FROM }}</td>
+								<td>{{ courseAttendance.COURSE_SCHEDULE.COURSESCHEDULE_TIME_TO }}</td>
+								<td>{{ courseAttendance.COURSE_SCHEDULE.COURSESCHEDULE_CLASSROOM }}</td>
+								<td>{{ courseAttendance.COURSE_SCHEDULE.INSTRUCTOR.INSTRUCTOR_FIRST_NAME+"
+									"+courseAttendance.COURSE_SCHEDULE.INSTRUCTOR.INSTRUCTOR_LAST_NAME }}</td>
+								<td>{{ courseAttendance.STATUS}}</td>
+<!-- 								<td ><div ng-show="courseAttendance.STATUS == 'true'"> PRESENT</div></td>
+								<td><div ng-show="courseAttendance.STATUS == 'false'"> ABSENT</div></td>
+ -->							</tr>
+						</tbody>
+					</table>
+				</div>
+			
+						</div>
+					</div>
+				</div>
+				<!-- /.panel -->
+			</div>
+
+
+			<!-- <div class="panel-footer"> -->
+
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+
+
+</div>
+
+

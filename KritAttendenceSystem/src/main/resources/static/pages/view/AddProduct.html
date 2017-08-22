@@ -1,0 +1,410 @@
+<div id="addProduct" ng-controller="addProductController">
+
+	<form name="productForm" ng-submit="submit(product,products)"
+		novalidate ng-scrollable="false">
+
+		<div class="page-header-product" layout-gt-xs="row">
+			<div ng-hide="isUpdate">
+				<h1>{{ labels.NEWPRODUCT }}</h1>
+			</div>
+			<div ng-show="isUpdate">
+				<h1>{{ labels.UPDATE_PRODUCT }}</h1>
+			</div>
+
+			<span flex></span>
+			<div>
+				<button ng-click="back()" class="btn btn-blue"
+					style="margin-top: 30%">{{labels.BACK}}</button>
+			</div>
+		</div>
+
+		<div class="row">
+			<div ng-if="error" class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+				<strong style="padding-left: 10px !important;">{{
+					errors.ERROR }}</strong>{{ }}{{errorMsg}}
+
+			</div>
+
+			<div ng-if="success" class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onClose(success)">&times;</button>
+				<strong style="padding-left: 10px !important;">{{
+					labels.SUCCESS }}</strong>{{ }}{{successMsg}}
+
+			</div>
+			<div class="col-lg-12">
+				<div id="accordion">
+					<div class="panel panel-blue">
+						<a data-toggle="collapse" data-parent="#accordion" href=""
+							data-target="#collapseOne">
+							<div class="panel-heading panelHeader-font-size">{{labels.BASICDETAILS}}</div>
+						</a>
+						<div id="collapseOne" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div layout-gt-xs="column" layout-padding>
+									<div layout-gt-xs="row">
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{labels.PRODUCT_CODE}}</label>
+											<input ng-model="product.productCode"
+												md-placeholder="{{labels.PRODUCT_CODE}}" required
+												name="productCode">
+											<div ng-messages="productForm.productCode.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.productCode.$dirty && productForm.productCode.$error.required">
+												<div ng-message="required">*{{labels.PRODUCT_CODE}} {{
+													errors.REQUIRED }}</div>
+											</div>
+											</md-input-container>
+										</div>
+
+										<div layout-gt-xs="column" class="div-width">
+
+											<md-input-container flex-gt-xs> <label>{{labels.PRODUCT_NAME}}</label>
+											<input name="productName" ng-model="product.productName"
+												md-maxlength="50" required>
+											<div ng-messages="productForm.productName.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.productName.$dirty && productForm.productName.$error.required">
+												<div ng-message="required">{{labels.PRODUCT_NAME}}
+													{{errors.REQUIRED}}</div>
+												<div ng-message="md-maxlength">*{{labels.PRODUCT_NAME}}
+													{{ errors.MAXLENGTH50 }}</div>
+											</div>
+
+											</md-input-container>
+										</div>
+									</div>
+									<div layout-gt-xs="row">
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{labels.MANUFACTURER}}
+											</label> <input name="manufacturer" ng-model="product.manufacturer"
+												md-maxlength="50" required>
+											<div ng-messages="productForm.manufacturer.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.manufacturer.$dirty && productForm.manufacturer.$error.required">
+												<div ng-message="required">{{labels.MANUFACTURER}} {{
+													errors.REQUIRED }}</div>
+												<div ng-message="md-maxlength">*{{labels.MANUFACTURER}}
+													{{ errors.MAXLENGTH50 }}</div>
+											</div>
+
+											</md-input-container>
+										</div>
+										<div layout-gt-xs="column" class="div-width">
+											<div layout="row">
+												<div>
+													<input type="checkbox" id="productActive"
+														class="checkbox-custom" name="productActive"
+														ng-model="product.productActive"> <label
+														for="productActive" class="checkbox-custom-label">
+														{{labels.ACTIVE}}</label> <input type="checkbox"
+														id="productTaxable" class="checkbox-custom"
+														name="productTaxable" ng-model="product.taxable">
+													<label for="productTaxable" class="checkbox-custom-label">
+														{{labels.TAXABLE}}</label>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div layout-gt-xs="row">
+										<div laylout-gt-xs="column" class="div-width">
+											<md-autocomplete flex required md-no-cache="noCache"
+												md-selected-item="product.productCategory"
+												md-search-text-change="searchTextChange(searchText)"
+												md-search-text="searchText"
+												md-items="item in querySearch(searchText)" md-min-length="0"
+												md-item-text="item.display" placeholder="Choose Category"
+												md-floating-label="Product Category" flex-gt-xs>
+											<md-item-template> <span
+												md-highlight-text="searchText" md-highlight-flags="^i">{{item.display}}</span>
+											</md-item-template> <md-not-found>"{{searchText}}" <a
+												ng-click="openCategoryForm(null,categories)">{{labels.ADD_PRODUCT_CATEGORY}}</a>
+											</md-not-found>
+											<div ng-messages="productForm.productCategory.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.productCategory.$dirty && productForm.productCategory.$error.required">
+												<div ng-message="required">*{{labels.PRODUCT_CATEGORY}}
+													{{ errors.REQUIRED }}</div>
+											</div>
+											</md-autocomplete>
+
+	<!-- 										<div class="container">
+												<div class="row">
+													<div class='col-sm-6'>
+														<div class="form-group">
+															<div class='input-group date' id='datetimepicker1'>
+																<input type='text' class="form-control" /> <span
+																	class="input-group-addon"> <span
+																	class="glyphicon glyphicon-calendar"></span>
+																</span>
+															</div>
+														</div>
+													</div>
+													<script type="text/javascript">
+														$(function() {
+															$(
+																	'#datetimepicker1')
+																	.datetimepicker();
+														});
+													</script>
+												</div>
+											</div>
+ -->											<!-- <div flex>
+												<div class="dropdown">
+													<a class="dropdown-toggle" id="dropdown2" role="button"
+														data-toggle="dropdown" data-target="#" href="">
+														<div class="input-group">
+															<input type="text" class="form-control"
+																data-ng-model="data.dateDropDownInput"><span
+																class="input-group-addon"><i
+																class="glyphicon glyphicon-calendar"></i></span>
+														</div>
+													</a>
+													<ul class="dropdown-menu" role="menu"
+														aria-labelledby="dLabel">
+														<datetimepicker data-ng-model="data.dateDropDownInput"
+															data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
+													</ul>
+												</div>
+											</div> -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-blue">
+						<a data-toggle="collapse" data-parent="#accordion" href=""
+							data-target="#collapseTwo">
+							<div class="panel-heading panelHeader-font-size">{{labels.ADDITIONALDETAILS}}</div>
+						</a>
+						<div id="collapseTwo" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div layout-gt-xs="column" layout-padding>
+									<div layout-gt-xs="row">
+										<div layout-gt-xs="column" class="div-width">
+											<div layout-gt-xs="column">
+												<div flex-gt-xs>
+													<md-datepicker name="salesStartDate"
+														ng-model="product.salesStartDate"
+														md-placeholder="Sales Start Date" md-min-date="minDate"
+														md-max-date="maxDate"></md-datepicker>
+													<div ng-messages="productForm.salesStartDate.$error"
+														style="font: 10px !important;">
+														<div ng-message="mindate">*{{labels.MIN_DATE}}</div>
+														<div ng-message="maxdate">*{{labels.MAX_DATE}}</div>
+
+													</div>
+												</div>
+											</div>
+											<div layout-gt-xs="column">
+												<div flex-gt-xs>
+													<md-datepicker name="salesEndDate"
+														ng-model="product.salesEndDate"
+														md-placeholder="Sales End Date" md-min-date="minDate"
+														md-max-date="maxDate"></md-datepicker>
+													<div ng-messages="productForm.salesEndDate.$error"
+														style="font: 10px !important;">
+														<div ng-message="mindate">*{{labels.MIN_DATE}}</div>
+														<div ng-message="maxdate">*{{labels.MAX_DATE}}</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div layout-gt-xs="column" class="div-width">
+
+											<div layout-gt-xs="column">
+												<div flex-gt-xs>
+													<md-datepicker name="supportStartDate"
+														ng-model="product.supportStartDate"
+														md-placeholder="Support Start Date" md-min-date="minDate"
+														md-max-date="maxDate"> </md-datepicker>
+													<div ng-messages="productForm.supportStartDate.$error"
+														style="font: 10px !important;">
+														<div ng-message="mindate">*{{labels.MIN_DATE}}</div>
+														<div ng-message="maxdate">*{{labels.MAX_DATE}}</div>
+													</div>
+												</div>
+											</div>
+											<div layout-gt-xs="column">
+												<div flex-gt-xs>
+													<md-datepicker name="supportExpiryDate"
+														ng-model="product.supportExpiryDate"
+														md-placeholder="Support Expiry Date" md-min-date="minDate"
+														md-max-date="maxDate"></md-datepicker>
+													<div ng-messages="productForm.supportExpiryDate.$error"
+														style="font: 10px !important;">
+														<div ng-message="mindate">*{{labels.MIN_DATE}}</div>
+														<div ng-message="maxdate">*{{labels.MAX_DATE}}</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div layout-gt-xs="row">
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{
+												labels.UNIT_PRICE }}</label> <input type="number" name="uPrice"
+												ng-model="product.unitPrice">
+											<div ng-messages="productForm.unitPrice.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.unitPrice.$dirty"></div>
+											</md-input-container>
+										</div>
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{labels.USAGE_UNIT}}</label>
+											<input type="text" name="usageUnit"
+												ng-model="product.usageUnit" ng-minlength="1">
+											<div ng-messages="productForm.usageUnit.$error"
+												style="font: 10px !important;"
+												style="font: 10px !important;"
+												ng-show="productForm.usageUnit.$dirty">
+												<div ng-message="minlength">*{{labels.USAGE_UNIT}} {{
+													errors.MINLENGTH3 }}</div>
+											</div>
+											</md-input-container>
+										</div>
+									</div>
+									<div layout-gt-xs="row">
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{
+												labels.SERVICE_TAX }}</label> <input type="number" step="0.00"
+												name="serviceTax" ng-model="product.serviceTax"
+												ng-minlength="3">
+											<div ng-messages="productForm.serviceTax.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.serviceTax.$dirty">
+												<div ng-message="minlength">{{ labels.SERVICE_TAX }}
+													{{ errors.VALUEFORMAT }}</div>
+											</div>
+											</md-input-container>
+										</div>
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{
+												labels.SALES_TAX }}</label> <input type="number" step="0.00"
+												name="salesTax" ng-model="product.salesTax" ng-minlength="3">
+											<div ng-messages="productForm.salesTax.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.salesTax.$dirty">
+												<div ng-message="minlength">{{ labels.SALES_TAX }} {{
+													errors.VALUEFORMAT }}</div>
+											</div>
+											</md-input-container>
+										</div>
+									</div>
+									<div layout-gt-xs="row">
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{
+												labels.VAT }}</label> <input type="number" step="0.00" name="vatt"
+												ng-model="product.vat" ng-minlength="3">
+											<div ng-messages="productForm.vatt.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.vatt.$dirty">
+												<div ng-message="minlength">{{ labels.VAT }} {{
+													errors.VALUEFORMAT }}</div>
+											</div>
+											</md-input-container>
+										</div>
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{labels.QTY_IN_STOCK}}</label>
+											<input type="number" name="qtyInStock"
+												ng-model="product.qtyInStock" ng-minlength="2">
+											<div ng-messages="productForm.qtyInStock.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.qtyInStock.$dirty">
+												<div ng-message="minlength">{{labels.QTY_IN_STOCK}} {{
+													errors.MINVALUE}}</div>
+											</div>
+											</md-input-container>
+										</div>
+									</div>
+									<div layout-gt-xs="row">
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{
+												labels.COMMISSION_RATE_INPERCENT }}</label> <input type="number"
+												step="0.00" name="commissionRateInPercent"
+												ng-model="product.commissionRateInPercent" ng-minlength="3">
+											<div ng-messages="productForm.commissionRateInPercent.$error"
+												style="font: 10px !important;"
+												style="font: 10px !important;"
+												ng-show="productForm.commissionRateInPercent.$dirty">
+												<div ng-message="minlength">{{
+													labels.COMMISSION_RATE_INPERCENT }} {{ errors.VALUEFORMAT
+													}}</div>
+
+											</div>
+
+											</md-input-container>
+										</div>
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{labels.COMMISSION_RATE}}
+											</label> <input type="number" step="0.00" name="commissionRate"
+												ng-model="product.commissionRate" ng-minlength="3">
+											<div ng-messages="productForm.commissionRate.$error"
+												style="font: 10px !important;"
+												ng-show="productForm.commissionRate.$dirty">
+												<div ng-message="minlength">{{labels.COMMISSION_RATE}}
+													{{ errors.VALUEFORMAT }}</div>
+											</div>
+											</md-input-container>
+										</div>
+									</div>
+									<div layout-gt-xs="row">
+
+										<div layout-gt-xs="column" class="div-width">
+											<md-input-container flex-gt-xs> <label>{{labels.DESCRIPTION}}</label>
+											<input name="description" ng-model="product.description"
+												md-maxlength="150">
+											<div ng-messages="productForm.description.$error"
+												ng-show="productForm.description.$dirty"
+												style="font: 10px !important;">
+												<div ng-message="md-maxlength">*{{labels.DESCRIPTION}}
+													{{ errors.MAXLENGTH150 }}</div>
+											</div>
+											</md-input-container>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="panel panel-blue">
+						<a data-toggle="collapse" data-parent="#accordion" href=""
+							data-target="#collapseThree">
+							<div class="panel-heading panelHeader-font-size">{{labels.CUSTOMDETAILS}}</div>
+						</a>
+						<div id="collapseThree" class="panel-collapse collapse">
+							<div class="panel-body"></div>
+						</div>
+					</div>
+					<!-- /.panel -->
+				</div>
+
+
+				<!-- <div class="panel-footer"> -->
+
+				<div layout-gt-xs="row">
+					<div></div>
+					<span flex></span>
+					<div>
+						<button type="submit" class="btn btn-primary btn-save">{{labels.SAVE}}</button>
+					</div>
+					<div>
+						<button type="button" ng-click="reset()"
+							class="btn btn-primary btn-reset">{{labels.RESET}}</button>
+					</div>
+				</div>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+
+	</form>
+</div>
+
+

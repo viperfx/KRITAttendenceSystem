@@ -1,0 +1,65 @@
+<div ng-controller="mainController">
+	<md-toolbar layout="row">
+	<div class="md-toolbar-tools md-hue-2" layout-padding>
+		<a ng-click="open()" class="md-primary" aria-label="Menu" hide-gt-md>
+			<i class="fa fa-bars"></i>
+		</a>
+		<h2>{{labels.APP}}</h2>
+		<span flex></span>
+		<ul class="nav navbar-top-links navbar-right">
+			<li class="dropdown"><a class="dropdown-toggle"
+				data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
+					<i class="fa fa-caret-down"></i>
+			</a>
+				<ul class="dropdown-menu dropdown-user">
+					<li><md-icon md-svg-icon="" class="avatar"></md-icon></li>
+					<li><a href="#"><i class="fa fa-user fa-fw"></i> User
+							Profile</a></li>
+					<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+					<li class="divider"></li>
+					<li><div ng-controller="logoutCtrl"><button ng-click="removeData()" ><i class="fa fa-sign-out fa-fw"></i>
+							Logout</button></div></li>
+				</ul> <!--  /.dropdown-user --></li>
+			<!--  /.dropdown -->
+		</ul>
+	</div>
+	</md-toolbar>
+
+	<div layout="row" flex layout-padding>
+
+		<md-sidenav class="md-sidenav-left md-whiteframe-2dp-right-Border"
+			md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"
+			class="md-whiteframe-z2" md-disable-backdrop md-whiteframe="2"
+			show-gt-md> <md-content layout-padding> <!-- 			 <md-card>
+
+		<div layout="row">
+			<div>
+				<md-card-content layout="column" layout-align="space-between">
+				<md-icon md-svg-icon="fa fa-user fa-fw" class="avatar"></md-icon>
+				<h2>Hello</h2>
+				<p>World</p>
+				</md-card-content>
+			</div>
+
+		</div>
+		</md-card>
+ -->
+		<section flex>
+			<div>Dashboard</div>
+		</section>
+		<section flex>
+			<div>Product</div>
+		</section>
+		<section flex>
+			<div>Inquiry</div>
+		</section>
+		<md-button ng-click="close()" class="md-primary" hide-gt-sm>
+		Close Sidenav Left </md-button> </md-content> </md-sidenav>
+		
+		<md-content flex layout-padding>
+		<div ui-view ></div>
+		</md-content>
+
+	</div>
+
+</div>

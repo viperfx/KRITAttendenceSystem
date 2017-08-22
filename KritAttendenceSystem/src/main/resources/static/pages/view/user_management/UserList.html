@@ -1,0 +1,131 @@
+<div ng-controller="userListController">
+	<div class="row">
+		<div ng-if="error" class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+			<strong style="padding-left: 10px !important;">{{
+				errors.ERROR }}</strong>  {{ errorMsg }}
+
+		</div>
+
+		<div ng-if="success" class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true" ng-click="onClose(success)">&times;</button>
+			<strong style="padding-left: 10px !important;">{{
+				labels.SUCCESS }}</strong>  {{ successMsg }}
+
+		</div>
+		
+		<div class="col-lg-12">
+			<div class="panel panel-blue">
+				<div class="panel-heading" layout="row">
+					<div class="panelHeader-font-size">{{labels.USER_DETAILS}}</div>
+					<span flex></span>
+					<div>
+						<button type="button" class="btn btn-outline btn-default"
+							ng-click="addUserDetails(null,users)">Add User</button>
+
+						<button type="button" class="btn btn-outline btn-default"
+							ng-click="deleteUsers(null,users,selected)">Delete User</button>
+					</div>
+
+				</div>
+				<!-- /.panel-heading -->
+
+
+				<div class="panel-body">
+
+					<div class="dataTable_wrapper">
+						<table class="table table-striped table-bordered table-hover"
+							id="enquiryTable">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="" name=""
+										ng-model="allSelected" ng-click="selectAll(users)"></th>
+									<th>{{labels.NAME}}</th>
+									<th>{{labels.GENDER}}</th>
+									<th>{{labels.EMAIL_ID}}</th>
+									<th>{{labels.MOBILE_NUMBER}}</th>
+									<th>{{labels.ROLE}}</th>
+									<th>{{labels.DEPARTMENT}}</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="user in users" ng-class-even="even"
+									ng-class-odd="odd" ng-if="user.IS_DELETED == false">
+									<td><input type="checkbox" id="" name=""
+										ng-checked="selectedCheck(user.USER_ID)"
+										ng-click="select(user.USER_ID,users)"></td>
+									<td>{{ user.FIRST_NAME }} {{ user.LAST_NAME }}</td>
+									<td>{{ user.GENDER }}</td>
+									<td>{{ user.EMAIL_ID }}</td>
+									<td>{{ user.MOBILE_NUMBER }}</td>
+									<td>{{ user.ROLE }}</td>
+									<td>{{ user.DEPARTMENT }}</td>
+									<td><button type="button"
+											ng-click="edit($event, user, users)" class="btn btn-edit">
+											<i class="fa fa-pencil fa-fw"></i>
+										</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- /.table-responsive -->
+
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+
+</div>
+
+<!-- <div ng-controller="contactDetailsController" ng-cloak>
+	<div class="row" layout="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Contact Details</h1>
+		</div>
+		<span flex></span>
+		<div>
+			<button type="button" class="btn btn btn-info"
+				ng-click="addContactDetails($event,contact,contacts)" style="margin-top: 35%; margin-left: -33%;">Add
+				Contact</button>
+		</div>
+	</div>
+	<div class="col-lg-4" ng-repeat="contact in contacts"
+		ng-if="contact.IS_DELETED == false">
+		<div class="panel panel-contactDetails">
+			<div class="panel-heading">{{ contact.SUFFIX }}
+				{{contact.FIRST_NAME }} {{ contact.LAST_NAME }}</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-4">
+						<img class="contactimage" alt=""
+							src="resource/images/contactperson.png" />
+					</div>
+
+					<div class="col-lg-4">
+						<h6>{{ contact.COMPANY_NAME }}</h6>
+						<h6>{{ contact.EMAIL_ID }}</h6>
+						<h6>{{ contact.MOBILE_NUMBER }}</h6>
+						<h6>{{ contact.CLIENT }}</h6>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer" layout-gt-xs="row">
+				<div></div>
+				<span flex></span>
+				<button type="button"
+					ng-click="editDetails($event,$index,contact,contacts)"
+					class="btn btn-editDelete">Edit</button>
+				<button type="button" ng-click="onRemove($index,contacts,contact)"
+					class="btn btn-editDelete">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+ -->

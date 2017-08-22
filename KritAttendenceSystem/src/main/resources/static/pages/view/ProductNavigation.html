@@ -1,0 +1,28 @@
+<div ng-controller="productNavigationController">
+	<div class="row">
+		<div class="col-lg-12">
+			<br></br>
+			<button type="button" class="btn btn-purple btn-lg"
+				ng-click="productDetails()" tltle="View Product">View Product</button>
+
+			<button type="button" class="btn btn-warning btn-lg"
+				ng-click="showProductCategory()" tltle="View Product Category">
+				View Category</button>
+
+			<button type="button" class="btn btn-primary btn-lg"
+				ui-sref-active="active" ng-click="onregister()"
+				title="Add New Product">New Product</button>
+
+			<button type="button" class="btn btn-success btn-lg"
+				ng-click="addCategory()" tltle="Add New Product Category">
+				New Category</button>
+
+			<br></br>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<div ui-view="add_Product"></div>
+	<div ui-view="add_Product_Category"></div>
+	<div ui-view="product_Details"></div>
+	<div ui-view="product_Category"></div>
+</div>

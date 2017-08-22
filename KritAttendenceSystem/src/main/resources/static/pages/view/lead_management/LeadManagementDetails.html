@@ -1,0 +1,109 @@
+<div ng-controller="leadManagementController">
+	<div class="row">
+		<div ng-if="error" class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+			<strong style="padding-left: 10px !important;">{{
+				errors.ERROR }}</strong>  {{ errorMsg }}
+
+		</div>
+
+		<div ng-if="success" class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true" ng-click="onClose(success)">&times;</button>
+			<strong style="padding-left: 10px !important;">{{
+				labels.SUCCESS }}</strong>  {{ successMsg }}
+
+		</div>
+
+		<div class="col-lg-12">
+			<div class="panel panel-blue">
+				<div class="panel-heading panelHeader-font-size">{{labels.LEAD_DETAILS}}</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<div layout="row">
+						<div laylout-gt-xs="column">
+							<md-autocomplete flex required md-no-cache="noCache"
+								md-selected-item="lead.LOGINSHELL.userName"
+								md-search-text-change="searchTextChange(selectedUser)"
+								md-search-text="selectedUser"
+								md-items="user in userSearch(selectedUser)" md-min-length="0"
+								md-item-text="user.display" placeholder="Choose User"
+								md-floating-label="User" md-input-name="user" flex-gt-xs>
+							<md-item-template> <span
+								md-highlight-text="selectedUser" md-highlight-flags="^i">{{user.display}}</span>
+							</md-item-template> <md-not-found>"{{selectedUser}}" </md-not-found> </md-autocomplete>
+						</div>
+						<div>
+							<button type="button" class="btn btn-outline btn-blue "
+								ng-click="assignUser(lead.LOGINSHELL)">{{labels.APPLY_USER}}</button>
+						</div>
+						<span flex></span>
+						<div laylout-gt-xs="column">
+							<md-autocomplete flex required md-no-cache="noCache"
+								md-selected-item="selectedLeadStatus"
+								md-search-text-change="searchTextChange(selectedLeadStatus)"
+								md-search-text="selectedLeadStatus"
+								md-items="status in leadStatusSearch(selectedLeadStatus)"
+								md-min-length="0" md-item-text="status.display"
+								placeholder="Choose Lead Status" md-floating-label="Lead Status"
+								md-input-name="leadStatus" flex-gt-xs> <md-item-template>
+							<span md-highlight-text="selectedLeadStatus"
+								md-highlight-flags="^i">{{status.display}}</span> </md-item-template> <md-not-found>"{{selectedLeadStatus}}"
+
+							</md-not-found> </md-autocomplete>
+						</div>
+						<div>
+							<button type="button" class="btn btn-outline btn-blue"
+								ng-click="setLeadStatus(selectedLeadStatus)">{{labels.APPLY_STATUS}}</button>
+						</div>
+					</div>
+					<div class="dataTable_wrapper">
+						<table class="table table-striped table-bordered table-hover"
+							id="enquiryTable">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="" name=""
+										ng-model="allSelected" ng-click="selectAll(leads)"></th>
+									<th>{{labels.NAME}}</th>
+									<th>{{labels.MOBILE_NUMBER}}</th>
+									<th>{{labels.COMPANY_NAME}}</th>
+									<th>{{labels.PRODUCT}}</th>
+									<th>{{labels.LEADSTATUS}}</th>
+									<th>{{labels.ASSIGNED_USER }}</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="lead in leads" ng-class-even="even"
+									ng-class-odd="odd">
+									<td><input type="checkbox" id="" name=""
+										ng-checked="selectedCheck(lead.LEAD_ID)"
+										ng-click="select(lead.LEAD_ID,leads)"></td>
+									<td>{{ lead.FIRST_NAME }} {{ lead.LAST_NAME }}</td>
+									<td>{{ lead.MOBILE_NUMBER }}</td>
+									<td>{{ lead.COMPANY_NAME }}</td>
+									<td>{{ lead.PRODUCT_NAME }}</td>
+									<td>{{ lead.LEAD_STATUS }}</td>
+									<td>{{ lead.LOGINSHELL.firstName }} {{
+										lead.LOGINSHELL.lastName }}</td>
+									<td><button type="button"
+											ng-click="edit($event,lead,leads)" class="btn btn-edit">
+											<i class="fa fa-pencil fa-fw"></i>
+										</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- /.table-responsive -->
+
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+
+</div>

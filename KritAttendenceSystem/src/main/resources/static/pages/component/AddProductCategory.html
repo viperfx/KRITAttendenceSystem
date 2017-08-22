@@ -1,0 +1,108 @@
+<div ng-controller="addProductCategoryController">
+	<form name="categoryForm"
+		ng-submit="addOrUpdateProductCategory(category,categories)"
+		ng-scrollable="false" novalidate>
+
+		<div class="page-header-product" layout-gt-xs="row">
+			<div ng-hide="isUpdate">
+				<h1>{{ labels.ADD_PRODUCT_CATEGORY }}</h1>
+			</div>
+			<div ng-show="isUpdate">
+				<h1>{{ labels.UPDATE_PRODUCT_CATEGORY }}</h1>
+			</div>
+			<span flex></span>
+			<div>
+				<div>
+					<button ng-click="back()" class="btn btn-blue"
+						style="margin-top: 30%">{{labels.BACK }}</button>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div ng-if="error" class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+				<strong style="padding-left: 10px !important;">{{
+					errors.ERROR}}</strong>{{ }}{{errorMsg}}
+			</div>
+			<div ng-if="success" class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true" ng-click="onClose(success)">&times;</button>
+				<strong style="padding-left: 10px !important;">{{
+					labels.SUCCESS}} </strong>{{ }}{{successMsg}}
+			</div>
+			<div class="col-lg-12">
+				<div class="panel panel-blue">
+					<div class="panel-heading panelHeader-font-size">{{labels.PRODUCT_CATEGORY}}</div>
+					<div class="panel-body">
+						<div layout-gt-xs="column" layout-padding>
+							<div layout-gt-xs="row">
+								<div layout-gt-xs="column" class="div-width">
+									<md-input-container flex-gt-xs> <label>{{labels.PRODUCT_CATEGORY_CODE}}</label>
+									<input ng-model="category.productCategoryCode"
+										md-placeholder="{{labels.PRODUCT_CATEGORY_CODE}}" required>
+									<div ng-messages="categoryForm.productCategoryCode.$error"
+										style="font: 10px !important;"
+										ng-show="categoryForm.productCategoryCode.$dirty && categoryForm.productCategoryCode.$error.required">
+										<div ng-message="required">{{labels.PRODUCT_CATEGORY_CODE}}</div>
+									</div>
+									</md-input-container>
+								</div>
+								<div layout-gt-xs="column" class="div-width">
+									<md-input-container flex-gt-xs> <label>{{labels.PRODUCT_CATEGORY_NAME}}</label>
+									<input name="productCategoryName"
+										ng-model="category.productCategoryName"
+										md-placeholder="{{ labels.PRODUCT_CATEGORY_NAME }}"
+										md-maxlength="50" required>
+									<div ng-messages="categoryForm.productCategoryName.$error"
+										style="font: 10px !important;"
+										ng-show="categoryForm.productCategoryName.$dirty && categoryForm.productCategoryName.$error.required">
+										<div ng-message="md-maxlength">* {{
+											labels.PRODUCT_CATEGORY_NAME }} {{ labels.MAXLENGTH50 }}</div>
+										<div ng-message="required">{{
+											labels.PRODUCT_CATEGORY_NAME }}</div>
+									</div>
+									</md-input-container>
+								</div>
+							</div>
+							<div layout-gt-xs="row">
+								<div laylout-gt-xs="column" class="div-width">
+									<md-autocomplete flex-gt-xs required md-no-cache="true"
+										md-selected-item="category.productCategorySubcategory"
+										md-search-text-change="searchTextChange(searchText)"
+										md-search-text="searchText"
+										md-items="item in querySearch(searchText)" md-min-length="0"
+										md-item-text="item.display" placeholder="Choose Category"
+										md-floating-label="{{labels.PRODUCT_CATEGORY}}" flex-gt-xs>
+									<md-item-template> <span
+										md-highlight-text="searchText" md-highlight-flags="^i">{{item.display}}</span>
+									</md-item-template> <md-not-found>"{{searchText}}" <a
+										ng-click="openCategoryForm(null,categories)">{{labels.ADD_PRODUCT_CATEGORY}}</a>
+									</md-not-found></md-autocomplete>
+									<font ng-if="category.productCategorySubcategory == -1">{{category.productCategoryName}}
+										is Root Category </font>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div layout-gt-xs="row">
+					<div></div>
+					<span flex></span>
+					<div>
+						<button type="submit" ng-disabled="!successSave"
+							class="btn btn-primary btn-save">{{labels.SAVE }}</button>
+					</div>
+					<div>
+						<button type="button" ng-click="reset()"
+							class="btn btn-primary btn-reset">{{labels.RESET}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+</div>

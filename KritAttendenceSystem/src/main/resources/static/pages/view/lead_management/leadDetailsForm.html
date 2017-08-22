@@ -1,0 +1,525 @@
+<div id="addLeadDetails" ng-controller="leadDetailsFormController"
+	layout="column">
+
+	<form name="leadDetailsForm" ng-submit="submit(lead,product)"
+		novalidate ng-scrollable="false">
+		<div class="panel-blue">
+			<div class="page-header-product" layout-gt-xs="row">
+				<div>
+					<h1>{{ labels.UPDATE_LEAD }}</h1>
+				</div>
+				<span flex></span>
+				<div>
+					<div>
+						<button ng-click="back()" class="btn btn-blue"
+							style="margin-top: 30%">{{labels.BACK }}</button>
+					</div>
+
+					<!-- <md-button class="md-icon-button md-button md-ink-ripple"
+						type="button" aria-label="Cancel" ng-click="cancel(event)">
+					<i class="fa fa-times cancel-btn"></i>
+					<div class="md-ripple-container"></div>
+					</md-button> -->
+				</div>
+			</div>
+			<div class="row">
+				<div ng-if="error" class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true" ng-click="onAlertClose(error)">&times;</button>
+					<strong style="padding-left: 10px !important;">{{
+						errors.ERROR }}</strong>{{ }}{{errorMsg}}
+
+				</div>
+
+				<div ng-if="success" class="alert alert-success alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true" ng-click="onClose(success)">&times;</button>
+					<strong style="padding-left: 10px !important;">{{
+						labels.SUCCESS }}</strong>{{ }}{{ SuccessMsg}}
+
+				</div>
+				<div class="col-lg-12" layout-gt-xs="column">
+					<div id="accordion">
+						<div class="panel panel-blue">
+							<a data-toggle="collapse" data-parent="#accordion" href=""
+								data-target="#collapseOne">
+								<div class="panel-heading panelHeader-font-size">{{labels.LEAD_DETAILS}}</div>
+							</a>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div layout-gt-xs="column" layout-padding>
+										<div layout-gt-xs="row">
+											<div laylout-gt-xs="column" class="div-width">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="lead.suffix"
+													md-search-text="suffixSearchText"
+													md-items="suffix in suffixSearch(suffixSearchText)"
+													md-min-length="0" md-item-text="suffix.display"
+													placeholder="Choose Suffix" md-floating-label="Suffix"
+													name="suffixName" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="suffixSearchText"
+													md-highlight-flags="^i">{{suffix.display}}</span> </md-item-template> <md-not-found>"{{suffixSearchText}}"
+
+												</md-not-found>
+												<div ng-messages="leadDetailsForm.suffixName.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.suffixName.$dirty && leadDetailsForm.suffixName.$error.required">
+													<div ng-message="required">*Suffix {{ errors.REQUIRED
+														}}</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.FIRST_NAME}}</label>
+												<input name="firstName" ng-model="lead.firstName"
+													md-maxlength="50" required>
+												<div ng-messages="leadDetailsForm.firstName.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.firstName.$dirty && leadDetailsForm.firstName.$error.required">
+													<div ng-message="required">{{labels.FIRST_NAME}}
+														{{errors.REQUIRED}}</div>
+
+												</div>
+												</md-input-container>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.LAST_NAME}}</label>
+												<input ng-model="lead.lastName"
+													md-placeholder="{{labels.LAST_NAME}}" required
+													name="lastName">
+												<div ng-messages="leadDetailsForm.lastName.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.lastName.$dirty && leadDetailsForm.lastName.$error.required">
+													<div ng-message="required">*{{labels.LAST_NAME}} {{
+														errors.REQUIRED }}</div>
+												</div>
+
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.COMPANY_NAME}}</label>
+												<input ng-model="lead.companyName"
+													md-placeholder="{{labels.COMPANY_NAME}}" required
+													name="companyName">
+												<div ng-messages="leadDetailsForm.companyName.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.companyName.$dirty && leadDetailsForm.companyName.$error.required">
+													<div ng-message="required">*{{labels.COMPANY_NAME}}
+														{{ errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.EMAIL_ID}}</label>
+												<input type="email" ng-model="lead.emailId"
+													md-placeholder="{{ labels.EMAIL_ID }}" required
+													name="emailId">
+												<div ng-messages="leadDetailsForm.emailId.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.emailId.$dirty && leadDetailsForm.emailId.$error">
+													<div ng-message="required">*{{labels.EMAIL_ID}} {{
+														errors.REQUIRED }}</div>
+													<div ng-message="email">*{{ errors.EMAILCHECK }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-input-container flex-gt-xs> <label>{{labels.MOBILE_NUMBER}}</label>
+												<input name="mobileNumber" ng-model="lead.mobileNumber"
+													md-maxlength="13" minlength="10" required>
+												<div ng-messages="leadDetailsForm.mobileNumber.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.mobileNumber.$dirty && leadDetailsForm.mobileNumber.$error">
+													<div ng-message="required">*{{labels.MOBILE_NUMBER}}
+														{{errors.REQUIRED}}</div>
+													<div ng-message="minlength">*{{labels.MOBILE_NUMBER}}
+														{{errors.MINLENGTH13}}</div>
+													<div ng-message="md-maxlength">*{{labels.MOBILE_NUMBER}}
+														{{errors.MAXLENGTH13}}</div>
+
+												</div>
+
+												</md-input-container>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+											<div laylout-gt-xs="column" class="div-width">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="lead.industry"
+													md-search-text="industrySearchText"
+													md-items="industry in industrySearch(industrySearchText)"
+													md-min-length="0" md-item-text="industry.display"
+													placeholder="Choose Industry" md-floating-label="Industry"
+													name="industryName" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="industrySearchText"
+													md-highlight-flags="^i">{{industry.display}}</span> </md-item-template> <md-not-found>"{{industrySearchText}}"
+
+												</md-not-found>
+												<div ng-messages="leadDetailsForm.industryName.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.industryName.$dirty && leadDetailsForm.industryName.$error.required">
+													<div ng-message="required">*Industry {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+											<div laylout-gt-xs="column" class="div-width">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="lead.productName"
+													md-search-text="productSearchText"
+													md-items="productD in productSearch(productSearchText)"
+													md-min-length="0" md-item-text="productD.display"
+													placeholder="Choose Product" md-floating-label="Products"
+													name="productName" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="productSearchText"
+													md-highlight-flags="^i">{{productD.display}}</span> </md-item-template> <md-not-found>"{{productSearchText}}"
+
+												</md-not-found>
+												<div ng-messages="leadDetailsForm.productName.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.productName.$dirty && leadDetailsForm.productName.$error.required">
+													<div ng-message="required">*Product {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-input-container flex-gt-xs> <label>{{labels.CLIENT}}</label>
+												<input name="client" ng-model="lead.client"
+													md-maxlength="50" required>
+												<div ng-messages="enquiryForm.client.$error"
+													style="font: 10px !important;"
+													ng-show="enquiryForm.client.$dirty && enquiryForm.client.$error.required">
+													<div ng-message="required">{{labels.CLIENT}}
+														{{errors.REQUIRED}}</div>
+													<div ng-message="md-maxlength">*{{labels.CLIENT}} {{
+														errors.MAXLENGTH50 }}</div>
+												</div>
+
+												</md-input-container>
+											</div>
+											<div layout-gt-xs="column" class="div-width"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-blue">
+							<a data-toggle="collapse" data-parent="#accordion" href=""
+								data-target="#collapseTwo">
+								<div class="panel-heading panelHeader-font-size">{{labels.ADDITIONALDETAILS}}</div>
+							</a>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div layout-gt-xs="column" layout-padding>
+
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.PHONE_NUMBER}}</label>
+												<input ng-model="lead.phoneNumber"
+													md-placeholder="{{labels.PHONE_NUMBER}}" required
+													name="phoneNumber">
+												<div ng-messages="leadDetailsForm.phoneNumber.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.phoneNumber.$dirty">
+													<div ng-message="md-maxlength">*{{labels.PHONE_NUMBER}}
+														{{ MAXLENGTH12 }}</div>
+												</div>
+												</md-input-container>
+											</div>
+											<div laylout-gt-xs="column" class="div-width">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="lead.leadSource"
+													md-search-text-change="searchTextChange(searchLeadSource)"
+													md-search-text="searchLeadSource"
+													md-items="source in leadSourceSearch(searchLeadSource)"
+													md-min-length="0" md-item-text="source.display"
+													placeholder="Choose Lead Source"
+													md-floating-label="Lead Source" md-input-name="leadSource"
+													flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchLeadSource"
+													md-highlight-flags="^i">{{source.display}}</span> </md-item-template> <md-not-found>"{{searchLeadSource}}"
+												</md-not-found> </md-autocomplete>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+
+											<div laylout-gt-xs="column" class="div-width">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="lead.leadStatus"
+													md-search-text-change="searchTextChange(searchLeadStatus)"
+													md-search-text="searchLeadStatus"
+													md-items="status in leadStatusSearch(searchLeadStatus)"
+													md-min-length="0" md-item-text="status.display"
+													placeholder="Choose Lead Status"
+													md-floating-label="Lead Status" md-input-name="leadStatus"
+													flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchLeadStatus"
+													md-highlight-flags="^i">{{status.display}}</span> </md-item-template> <md-not-found>"{{searchLeadStatus}}"
+												</md-not-found> </md-autocomplete>
+											</div>
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.ANNUALREVENUE}}</label>
+												<input name="annualRevenue" ng-model="lead.annualRevenue"
+													md-maxlength="50" required>
+												<div ng-messages="leadDetailsForm.annualRevenue.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.annualRevenue.$dirty">
+													<div ng-message="md-maxlength">*{{labels.ANNUALREVENUE}}
+														{{ errors.MAXLENGTH50 }}</div>
+												</div>
+
+												</md-input-container>
+											</div>
+										</div>
+
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.FAX}}</label>
+												<input ng-model="lead.fax" md-placeholder="{{labels.FAX}}"
+													required name="fax">
+												<div ng-messages="leadDetailsForm.fax.$error"
+													style="font: 10px !important"
+													ng-show="leadDetailsForm.fax.$dirty">
+													<div ng-message="md-maxlength">*{{labels.FAX}} {{
+														MAXLENGTH12 }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.WEBSITE}}</label>
+												<input ng-model="lead.website"
+													md-placeholder="{{labels.WEBSITE}}" required name="website">
+												<div ng-messages="leadDetailsForm.website.$error"
+													style="font: 10px !important"
+													ng-show="leadDetailsForm.website.$dirty">
+													<div ng-message="md-maxlength">*{{labels.WEBSITE}} {{
+														MAXLENGTH12 }}</div>
+												</div>
+												</md-input-container>
+											</div>
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.SKYPE_ID}}</label>
+												<input ng-model="lead.skypeId"
+													md-placeholder="{{labels.SKYPE_ID}}" required
+													name="skypeId">
+												<div ng-messages="leadDetailsForm.skypeId.$error"
+													style="font: 10px !important"
+													ng-show="leadDetailsForm.skypeId.$dirty">
+													<div ng-message="md-maxlength">*{{labels.SKYPE_ID}}
+														{{ MAXLENGTH12 }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+
+
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-input-container flex-gt-xs> <label>{{labels.SECONDARY_EMAIL_ID}}</label>
+												<input name="secondaryEmailId"
+													ng-model="lead.secondaryEmailId" md-maxlength="50" required>
+												<div ng-messages="leadDetailsForm.secondaryEmailId.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.secondaryEmailId.$dirty">
+													<div ng-message="md-maxlength">*{{labels.SECONDARY_EMAIL_ID}}
+														{{ errors.MAXLENGTH50 }}</div>
+												</div>
+
+												</md-input-container>
+											</div>
+
+										</div>
+										<div layout-gt-xs="row">
+
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.TWITTER}}</label>
+												<input ng-model="lead.twitter"
+													md-placeholder="{{labels.TWITTER}}" required name="twitter">
+												<div ng-messages="leadDetailsForm.twitter.$error"
+													style="font: 10px !important"
+													ng-show="leadDetailsForm.twitter.$dirty">
+													<div ng-message="md-maxlength">*{{labels.TWITTER}} {{
+														MAXLENGTH12 }}</div>
+												</div>
+												</md-input-container>
+											</div>
+
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.DESCRIPTION}}</label>
+												<input ng-model="lead.description"
+													md-placeholder="{{labels.DESCRIPTION}}" required
+													name="description">
+												<div ng-messages="leadDetailsForm.description.$error"
+													style="font: 10px !important"
+													ng-show="leadDetailsForm.description.$dirty">
+													<div ng-message="md-maxlength">*{{labels.DESCRIPTION}}
+														{{ MAXLENGTH12 }}</div>
+												</div>
+												</md-input-container>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-blue">
+							<a data-toggle="collapse" data-parent="#accordion" href=""
+								data-target="#collapseThree">
+								<div class="panel-heading panelHeader-font-size">{{labels.ADDRESS_DETAILS}}</div>
+							</a>
+
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div layout-gt-xs="column" layout-padding>
+
+										<div layout-gt-xs="row">
+											<div laylout-gt-xs="column" class="div-width-33">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="otherCountryName"
+													md-selected-item-change="listOfStates(otherCountryName)"
+													md-search-text-change="searchTextChange(searchOtherCountry)"
+													md-search-text="searchOtherCountry"
+													md-items="other_Country in countrySearch(searchOtherCountry)"
+													md-min-length="0" md-item-text="other_Country.display"
+													placeholder="Choose Country"
+													md-floating-label="Other Address" name="otherCountry"
+													flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchOtherCountry"
+													md-highlight-flags="^i">{{other_Country.display}}</span> </md-item-template> <md-not-found>"{{searchText}}"
+												<a ng-click="openCategoryForm(null,formCountries)">{{labels.ADD_COUNTRY}}</a>
+												</md-not-found>
+												<div ng-messages="leadDetailsForm.otherCountry.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.otherCountry.$dirty">
+													<div ng-message="error">*OtherCountry {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-autocomplete>
+											</div>
+											<div laylout-gt-xs="column" class="div-width-33">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="otherStateName"
+													md-selected-item-change="listOfCities(otherStateName)"
+													md-search-text-change="searchTextChange(searchOtherState)"
+													md-search-text="searchOtherState"
+													md-items="other_State in stateSearch(searchOtherState)"
+													md-min-length="0" md-item-text="other_State.display"
+													placeholder="Choose State" md-floating-label="Other State"
+													name="otherState" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchOtherState"
+													md-highlight-flags="^i">{{other_State.display}}</span> </md-item-template> <md-not-found>"{{searchOtherState}}"
+												<a ng-click="openCategoryForm(null,formStates)">{{labels.ADD_STATE}}</a>
+												</md-not-found>
+												<div ng-messages="leadDetailsForm.otherState.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.otherState.$dirty"></div>
+												<div style="font: 10px !important;"
+													ng-show="(otherStateName.countryId != null && otherStateName.countryId != undefined)  && otherStateName.countryId != otherCountryName.countryId">
+													<div style="color: red;">Select Proper State and City</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+											<div laylout-gt-xs="column" class="div-width-33">
+												<md-autocomplete flex required md-no-cache="noCache"
+													md-selected-item="otherCityName"
+													md-search-text-change="searchTextChange(searchOtherCity)"
+													md-search-text="searchOtherCity"
+													md-items="other_City in citySearch(searchOtherCity)"
+													md-min-length="0" md-item-text="other_City.display"
+													placeholder="Choose City" md-floating-label="Other City"
+													md-input-name="otherCity" flex-gt-xs> <md-item-template>
+												<span md-highlight-text="searchOtherCity"
+													md-highlight-flags="^i">{{other_City.display}}</span> </md-item-template> <md-not-found>"{{searchOtherCity}}"
+												<a ng-click="openCategoryForm(null,formCities)">{{labels.ADD_CITY}}</a>
+												</md-not-found>
+												<div ng-messages="leadDetailsForm.otherCity.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.otherCity.$dirty"></div>
+												<div style="font: 10px !important;"
+													ng-show="(otherCityName.countryId != null && otherCityName.countryId != undefined)  && otherCityName.countryId != otherCountryName.countryId">
+													<div style="color: red;">Select Proper State and City</div>
+												</div>
+												<div style="font: 10px !important;"
+													ng-show="(otherCityName.stateId != null && otherCityName.stateId != undefined) && otherCityName.stateId != otherStateName.stateId">
+													<div style="color: red;">Select Proper City</div>
+												</div>
+												</md-autocomplete>
+											</div>
+
+										</div>
+										<div layout-gt-xs="row">
+											<div layout-gt-xs="column" class="div-width">
+												<md-input-container flex-gt-xs> <label>{{labels.STREET}}</label>
+												<input ng-model="lead.otherAddressShell.addressStreet"
+													md-placeholder="{{labels.STREET}}" required
+													name="otherAddressStreet">
+												<div ng-messages="leadDetailsForm.otherAddressStreet.$error"
+													style="font: 10px !important"
+													ng-show="leadDetailsForm.otherAddressStreet.$dirty">
+													<div ng-message="required">*{{labels.STREET}} {{
+														errors.REQUIRED }}</div>
+												</div>
+												</md-input-container>
+											</div>
+											<div layout-gt-xs="column" class="div-width">
+
+												<md-input-container flex-gt-xs> <label>{{labels.ZIP}}</label>
+												<input name="otherAddressZip"
+													ng-model="lead.otherAddressShell.addressZip" required>
+												<div ng-messages="leadDetailsForm.otherAddressZip.$error"
+													style="font: 10px !important;"
+													ng-show="leadDetailsForm.otherAddressZip.$dirty"></div>
+
+												</md-input-container>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- /.panel -->
+					</div>
+					<!-- /.col-lg-12 -->
+					<!-- <div class="panel-footer"> -->
+
+					<div layout-gt-xs="row">
+						<div></div>
+						<span flex></span>
+						<div>
+							<button type="submit" class="btn btn-primary btn-save">{{labels.SAVE}}</button>
+						</div>
+						<div>
+							<button type="button" ng-click="reset()"
+								class="btn btn-primary btn-reset">{{labels.RESET}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
