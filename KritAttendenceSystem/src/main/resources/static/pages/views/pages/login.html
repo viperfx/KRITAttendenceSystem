@@ -19,18 +19,22 @@
 						<fieldset>
 							<div class="form-group">
 								<input class="form-control" placeholder="{{labels.USERNAME}}"
-									name="UserName" type="text" ng-model="user.userName" autofocus>
+									name="UserName" type="text" ng-model="user.userName" autofocus
+									ng-required="required">
 							</div>
 							<div class="form-group">
 								<input class="form-control" placeholder="{{labels.PASSWORD}}"
-									name="password" type="password" ng-model="user.passWord">
+									name="password" type="password" ng-model="user.passWord"
+									ng-required="required">
 							</div>
 							<div class="radio" layout="row">
-								<md-radio-group ng-model="role" layout="row"> 
-								<md-radio-button value="Instructor" class="md-primary"><div>{{ labels.INSTRUCTOR }}</div> </md-radio-button> 
-								<md-radio-button value="Student" class="md-primary"><div>{{ labels.STUDENT }}</div></md-radio-button> 
-									</md-radio-group>
-									<span flex></span>
+								<md-radio-group ng-model="role" layout="row"> <md-radio-button
+									value="Instructor" class="md-primary">
+								<div>{{ labels.INSTRUCTOR }}</div>
+								</md-radio-button> <md-radio-button value="Student" class="md-primary">
+								<div>{{ labels.STUDENT }}</div>
+								</md-radio-button> </md-radio-group>
+								<span flex></span>
 								<button type="button" ng-click="onSubmit()"
 									class="btn btn-primary">{{ labels.LOGIN }}</button>
 							</div>

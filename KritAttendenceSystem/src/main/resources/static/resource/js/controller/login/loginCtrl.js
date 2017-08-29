@@ -34,7 +34,10 @@ app
 							AuthenticationService.ClearCredentials();
 						})();
 
-						if ($scope.role === $scope.instructor) {
+						if($scope.role === null || $scope.role === undefined){
+							$scope.error = true;
+							$scope.errorMsg = "Please Select Role to Login";
+						}else if ($scope.role === $scope.instructor) {
 							AppRestService
 									.getInstructorDetails(function(data, status) {
 
@@ -63,8 +66,6 @@ app
 											status) {
 
 										if (status == 200) {
-											$scope.success = true;
-											$scope.SuccessMsg = "Data Added Successfully"
 											// response.error;
 											$scope.status = status;
 											$scope.error = false;
@@ -107,13 +108,17 @@ app
 
 													$state.go('dashboard.home');
 
+												}else {
+													$scope.error = true;
+													$scope.errorMsg = "Invalid Username/Password. Enter correct information to login";
+
 												}
 
 											}
 
 										} else {
 											$scope.error = true;
-											$scope.status = 404;
+											$scope.status = 402;
 											$scope.errorMsg = "Username or Password is incorrect";
 										}
 									});
