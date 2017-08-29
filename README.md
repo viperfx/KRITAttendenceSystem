@@ -26,7 +26,46 @@ be different for an Instructor and will provide more options like MyProfile, Cou
 exam in course and credit for that activity), Attendance(to take attendance of students) and Grade(to grade students).
 * By clicking on that option, it will call its relevant repository and that repository get data from database and return data to front-end.
 
+## Functions
+* Student
+1. Login       - finished
+2. Dashboard   
+3. MyProfile   
+4. Schedule    - finished
+5. Attendance  - finished
+6. Grade       - finished
+
+* Instructor
+1. Login
+2. Dashboard
+3. MyProfile
+4. Add CourseActivity
+5. Add Attendance
+6. Add Grade
+
 ## Screenshots
 
+Student Account
+
+Login Page
+![Login Page](https://github.com/DivyangPatelKRIT/KRITAttendenceSystem/blob/master/KritAttendenceSystem/src/main/resources/static/resource/img/Login.png)
+
+Dashboard
+![Login Page](https://github.com/DivyangPatelKRIT/KRITAttendenceSystem/blob/master/KritAttendenceSystem/src/main/resources/static/resource/img/Dashboard.png)
+
+Schedule
+![Login Page](https://github.com/DivyangPatelKRIT/KRITAttendenceSystem/blob/master/KritAttendenceSystem/src/main/resources/static/resource/img/CourseSchedule.png)
+
+Attendance
+![Attendance](https://github.com/DivyangPatelKRIT/KRITAttendenceSystem/blob/master/KritAttendenceSystem/src/main/resources/static/resource/img/Attendance.png)
+
+Attendance-2
+![Attendance-2](https://github.com/DivyangPatelKRIT/KRITAttendenceSystem/blob/master/KritAttendenceSystem/src/main/resources/static/resource/img/Attendance-2.png)
+
+Grade
+![Grade](https://github.com/DivyangPatelKRIT/KRITAttendenceSystem/blob/master/KritAttendenceSystem/src/main/resources/static/resource/img/Grade.png)
 
 
+## Application Diagram
+
+https://www.gliffy.com/go/share/si9lk3jw8tqlau3dhyi9
